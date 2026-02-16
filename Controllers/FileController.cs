@@ -60,6 +60,44 @@ namespace FileManager.Controllers
             }
         }
 
+        [HttpGet("parent")]
+        public IActionResult GetParent([FromQuery] string path)
+        {
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                return Ok((string?)null);
+            }
+
+            try
+            {
+                var parent = fileService.GetParentPath(path);
+                return Ok(parent);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("copy")]
+        public IActionResult Copy([FromQuery] string sourcePath, [FromQuery] string targetPath)
+        {
+            if (string.IsNullOrWhiteSpace(sourcePath) || string.IsNullOrWhiteSpace(targetPath))
+            {
+                return BadRequest("Не указаны пути source и/или target");
+            }
+
+            try
+            {
+                fileService.Copy(sourcePath, targetPath);
+                return Ok("Копирование выполнено успешно");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка копирования: {ex.Message}");
+            }
+        }
+
         [HttpPost("move")]
         public IActionResult Move([FromQuery] string sourcePath, string targetPath)
         {

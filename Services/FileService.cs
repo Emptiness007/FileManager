@@ -97,7 +97,7 @@ namespace FileManager.Services
 
             foreach (string subDir in Directory.GetDirectories(sourcePath))
             {
-                string targetDir = Path.Combine(targetPath, Path.Combine(subDir));
+                string targetDir = Path.Combine(targetPath, Path.GetFileName(subDir));
                 CopyDirectory(subDir, targetDir);
             }
         }

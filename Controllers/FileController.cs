@@ -6,7 +6,7 @@ namespace FileManager.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class FileController : Controller
+    public class FileController : ControllerBase
     {
         private readonly FileService fileService;
 
